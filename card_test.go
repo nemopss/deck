@@ -2,6 +2,7 @@ package deck
 
 import (
 	"fmt"
+	"math/rand"
 	"testing"
 )
 
@@ -67,5 +68,21 @@ func TestFilter(t *testing.T) {
 		if c.Rank == Two || c.Rank == Three {
 			t.Error("Expected all Twos and Threes to be filtered out")
 		}
+	}
+}
+
+func TestShuffle(t *testing.T) {
+	// deterministic shuffle
+	// [40, 35...]
+	shuffleRand = rand.New(rand.NewSource(0))
+	original := New()
+	first := original[40]
+	second := original[35]
+	cards := New(Shuffle)
+	if cards[0] != first {
+		t.Errorf("Expected the first card to be %s, got: %s", first, cards[0])
+	}
+	if cards[1] != second {
+		t.Errorf("Expected the second card to be %s, got: %s", second, cards[1])
 	}
 }
